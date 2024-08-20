@@ -6,10 +6,21 @@
 
 # useful for handling different item types with a single interface
 from itemadapter import ItemAdapter
-
+from openpyxl import Workbook
 
 class LufeijunPipeline:
+    def __init__(self):
+        self.wb = Workbook()
+        self.ws = self.wb.active
+        self.ws.append(["姓名", "年龄"])
+        self.file_name = "test.xlsx"
+
     def process_item(self, item, spider):
-        print(" LufeijunPipeline -- process_item  ")
-        print(item)
+        line = [item['name'], item['age']]
+        self.ws.append(line)
+        self.wb.save(self.file_name)
         return item
+    
+    def close_spider(self, spider):
+        # 关闭
+        self.wb.close()

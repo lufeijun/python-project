@@ -1,4 +1,5 @@
 import scrapy
+import json
 
 from lufeijun.items import LufeijunItem
 
@@ -8,14 +9,21 @@ class DemoSpider(scrapy.Spider):
     name = "demo"
     allowed_domains = ["www.baidu.com"]
     start_urls = [
-        "https://www.baidu.com/",
-        "https://www.youdao.com/",
+        "http://192.168.0.47:8000/info?page=1",
+        "http://192.168.0.47:8000/info?page=2",
+        "http://192.168.0.47:8000/info?page=3",
+        "http://192.168.0.47:8000/info?page=4",
+        "http://192.168.0.47:8000/info?page=5",
     ]
 
     def parse(self, response):
-        item = LufeijunItem()
-        item["name"] = "姓名"
-        yield item
+        list = json.loads( response.body.decode() )
+        for value in list:
+            item = LufeijunItem(
+                age= value["age"],
+                name = value["name"],
+            )
+            yield item
 
     def sayHello(self):
         print("hello world")    
