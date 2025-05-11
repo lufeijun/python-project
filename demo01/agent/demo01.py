@@ -5,7 +5,7 @@ from langgraph.checkpoint.memory import MemorySaver
 from langgraph.prebuilt import create_react_agent
 from openai import api_key
 
-
+# 官网的 dmeo
 memory = MemorySaver()
 
 model = ChatOpenAI(
@@ -16,7 +16,7 @@ model = ChatOpenAI(
 
 search = TavilySearchResults(
         max_results=2,
-        tavily_api_key="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"
+        tavily_api_key=""
     )
 tools = [search]
 

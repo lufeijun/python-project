@@ -14,7 +14,7 @@ from langchain_community.chat_message_histories import RedisChatMessageHistory
 class RedisChatBot:
     def __init__(
             self,
-            redis_url: str = "redis://localhost:6379/0",
+            redis_url: str = "redis://:123456@localhost:6379/0",
             max_history: int = 10,
         ):
         self.redis_url = redis_url
@@ -50,7 +50,8 @@ class RedisChatBot:
         """获取Redis消息历史"""
         return RedisChatMessageHistory(
             url=self.redis_url,
-            session_id=session_id
+            session_id=session_id,
+            ttl=1200,
         )
     def limit_history(self, messages: List) -> List:
         """限制历史记录长度"""
