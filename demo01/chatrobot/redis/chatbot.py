@@ -9,6 +9,7 @@ from langchain.prompts import (
 from langchain_openai import ChatOpenAI
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_community.chat_message_histories import RedisChatMessageHistory
+from pydantic import SecretStr
 
 
 class RedisChatBot:
@@ -34,7 +35,7 @@ class RedisChatBot:
         self.chat_model = ChatOpenAI(
             base_url="http://ollama:11434/v1",
             model="qwen3:1.7b",
-            api_key="ollama",
+            api_key= SecretStr("sk-ollama"),
         )
         self.chain = prompt | self.chat_model
 

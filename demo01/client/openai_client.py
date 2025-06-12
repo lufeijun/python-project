@@ -1,7 +1,7 @@
 import string
 from langchain_openai import ChatOpenAI , OpenAI
 from langchain_core.messages import HumanMessage
-
+from pydantic import SecretStr
 
 class MyOpenaiClient:
     def __init__(self, model_name: str = "deepseek-r1:1.5b", temperature: float = 0.3):
@@ -9,13 +9,13 @@ class MyOpenaiClient:
         self.chat_model = ChatOpenAI(
             base_url="http://ollama:11434/v1",  # Ollama 的兼容 OpenAI 的 API 地址
             model=model_name,  # 你的 Ollama 模型名
-            api_key="ollama",  # 任意字符串（Ollama 不需要真实 key） ，注意：不能传汉字
+            api_key=SecretStr("sk-ollama"),  # 任意字符串（Ollama 不需要真实 key） ，注意：不能传汉字
         )
         
         self.llm = OpenAI(
             base_url="http://ollama:11434/v1",  # Ollama 的兼容 OpenAI 的 API 地址
             model=model_name,  # 你的 Ollama 模型名
-            api_key="ollama",  # 任意字符串（Ollama 不需要真实 key） ，注意：不能传汉字
+            api_key=SecretStr("sk-ollama"),  # 任意字符串（Ollama 不需要真实 key） ，注意：不能传汉字
         )
         return
     

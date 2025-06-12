@@ -9,6 +9,8 @@ from langchain_core.chat_history import (
     InMemoryChatMessageHistory,
 )
 from langchain_core.runnables.history import RunnableWithMessageHistory
+from langchain_core.runnables.config import RunnableConfig
+
 
 # model 客户端
 # client = MyOpenaiClient(model_name="qwen3:1.7b").chat_model
@@ -44,7 +46,10 @@ def get_session_history(session_id: str) -> BaseChatMessageHistory:
 def demo02():
     # 在内存中保存聊天消息
     with_message_history = RunnableWithMessageHistory(client, get_session_history)
-    config = {"configurable": {"session_id": "1234"}}
+    
+    config = RunnableConfig(
+        metadata={"configurable": {"session_id": "1234"}}
+    )
     
     response = with_message_history.invoke(
         [HumanMessage(content="你好，我叫王武，很高兴认识你")],
